@@ -4,7 +4,7 @@ import * as n13 from "./m13";
 import speedDialSettings from "./speedDialSettings";
 import dialHelper from "./dialHelper";
 import appStore from "./appStore";
-import n110 from "./m110";
+import dialer_translator from "./dialer_translator";
 
 class SpeedDialHelper extends StoreBase {
 	constructor() {
@@ -121,7 +121,7 @@ class SpeedDialHelper extends StoreBase {
 	}
 	_handle_keyup(e) {
 		if (this.pressingTimer && !Service.query("LaunchStore.isLaunching") && Service.query("Dialer.ready")) {
-			var t = n110.translate(e.key);
+			var t = dialer_translator.translate(e.key);
 			switch (t) {
 				case "0":
 				case "1":
@@ -143,7 +143,7 @@ class SpeedDialHelper extends StoreBase {
 	_handle_keydown(e) {
 		var t = this;
 		if (!Service.query("LaunchStore.isLaunching") && Service.query("Dialer.ready")) {
-			var n = n110.translate(e.key);
+			var n = dialer_translator.translate(e.key);
 			switch ((this.pressingTimer && (window.clearTimeout(this.pressingTimer), (this.pressingTimer = null)), n)) {
 				case "0":
 				case "1":
