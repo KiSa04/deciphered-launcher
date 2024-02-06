@@ -4,7 +4,7 @@ import Service from "./Service";
 import softkeyStore from "./softkeyStore";
 import SettingsCore from "./SettingsCore";
 import * as n13 from "./m13";
-import n110 from "./m110";
+import dialer_translator from "./dialer_translator";
 import simCardHelper from "./simCardHelper";
 import launchStore from "./launchStore";
 import fontFit from "./font-fit";
@@ -81,7 +81,7 @@ class DialerInput extends ComponentBase {
 		e.preventDefault();
 	}
 	onKeyUp(e) {
-		var t = n110.translate(e.key);
+		var t = dialer_translator.translate(e.key);
 		"Backspace" === t && this.clearLongpressDeleteTimer(), "0" === t && (window.clearTimeout(this.longpressSpecialChar), (this.longpressSpecialChar = null));
 	}
 	onKeyDown(e) {
