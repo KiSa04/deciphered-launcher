@@ -11,14 +11,14 @@ import animateComponent from "./animate-component";
 import * as n216 from "./m216";
 import * as n206 from "./m206";
 
-function o(e) {
+function _ToArray(e) {
 	if (Array.isArray(e)) {
 		for (var t = 0, n = Array(e.length); t < e.length; t++) n[t] = e[t];
 		return n;
 	}
 	return Array.from(e);
 }
-function l(e) {
+function Create_tiles(e) {
 	return React.createElement(
 		"div",
 		{ className: "app-tile", style: Object.assign({}, e.renderProps.orderStyle) },
@@ -36,11 +36,13 @@ function l(e) {
 	);
 }
 
-var N = ["Siberian Strike", "Danger Dash", "Castle Of Magic", "Nitro Street Run 2"],
-	D = ["Assistant", "Maps", "Google Search", "YouTube", "Twitter"];
+var Bloatware = ["Siberian Strike", "Danger Dash", "Castle Of Magic", "Nitro Street Run 2"],
+	Oem_apps = ["Assistant", "Maps", "Google Search", "YouTube", "Twitter"];
 
 class _AppList extends ComponentBase {
-	static defaultProps = { viewMode: "grid", col: 3, row: 3 };
+	//static Grid_proportions = { viewMode: "grid", col: 3, row: 3 };
+	//change values to handle the 4x4 grid
+	static Grid_proportions = { viewMode: "grid", col: 4, row: 4 };
 	static propTypes = { viewMode: React.PropTypes.string, col: React.PropTypes.number, row: React.PropTypes.number };
 
 	constructor(props) {
@@ -86,7 +88,7 @@ class _AppList extends ComponentBase {
 		SettingsCore.addObserver("custom.launcher.apps", __self);
 		window.addEventListener("visibilitychange", function () {
 			var e = document.activeElement;
-			document.hidden && __self.appElements && [].concat(o(__self.appElements)).includes(e) && ((__self.isStickyApp = true), e && e.classList.add("is-focus-app"));
+			document.hidden && __self.appElements && [].concat(_ToArray(__self.appElements)).includes(e) && ((__self.isStickyApp = true), e && e.classList.add("is-focus-app"));
 		});
 		n13.asyncLocalStorage.getItem("app-view-mode").then(function (e) {
 			e && __self.switchViewMode(e);
@@ -103,18 +105,18 @@ class _AppList extends ComponentBase {
 		(this.custom_apps = e), this.updateApps();
 	}
 	customAppHandler(e) {
-		for (var t = [], n = [], i = appStore.getDataMcc(), a = appStore.getSimmcc(), o = 0; o < e.length; o++)
-			if ("TIMGate" != e[o].manifest.name)
-				D.includes(e[o].manifest.name) ? (a ? "460" !== a && t.push(e[o]) : "460" !== i && t.push(e[o])) : N.includes(e[o].manifest.name) ? n.push(e[o]) : t.push(e[o]);
+		for (var t = [], n = [], i = appStore.getDataMcc(), a = appStore.getSimmcc(), _ToArray = 0; _ToArray < e.length; _ToArray++)
+			if ("TIMGate" != e[_ToArray].manifest.name)
+				Oem_apps.includes(e[_ToArray].manifest.name) ? (a ? "460" !== a && t.push(e[_ToArray]) : "460" !== i && t.push(e[_ToArray])) : Bloatware.includes(e[_ToArray].manifest.name) ? n.push(e[_ToArray]) : t.push(e[_ToArray]);
 			else {
 				var r = appStore.getDataMccmnc(),
 					s = appStore.getSimmccmnc();
-				("22201" != r && "22201" != s) || t.push(e[o]);
+				("22201" != r && "22201" != s) || t.push(e[_ToArray]);
 			}
 		if (this.custom_apps)
-			for (var u = this.custom_apps.split(","), l = 0; l < n.length; l++) {
-				var c = N.indexOf(n[l].manifest.name).toString();
-				u.indexOf(c) !== -1 && t.push(n[l]);
+			for (var u = this.custom_apps.split(","), Create_tiles = 0; Create_tiles < n.length; Create_tiles++) {
+				var c = Bloatware.indexOf(n[Create_tiles].manifest.name).toString();
+				u.indexOf(c) !== -1 && t.push(n[Create_tiles]);
 			}
 		return (
 			t.sort(function (e, t) {
@@ -159,10 +161,10 @@ class _AppList extends ComponentBase {
 					});
 				});
 		} else if (a < 0) {
-			var o = n.filter(function (e) {
+			var _ToArray = n.filter(function (e) {
 					return !i.includes(e);
 				}),
-				r = o.filter(function (e) {
+				r = _ToArray.filter(function (e) {
 					return e.toBeTracked || (e.mozApp && e.mozApp.toBeTracked);
 				});
 			r.forEach(function (e) {
@@ -267,7 +269,7 @@ class _AppList extends ComponentBase {
 		var t = this;
 		this.setState(
 			function (n) {
-				if (((n.reorderMode = false), e)) n.focus = [].concat(o(t.reorder.focus));
+				if (((n.reorderMode = false), e)) n.focus = [].concat(_ToArray(t.reorder.focus));
 				else {
 					var i = t.focusIndex;
 					n.apps[i].renderProps.orderStyle.order = t.calcOrder(i);
@@ -282,7 +284,7 @@ class _AppList extends ComponentBase {
 	saveOrderAndExit() {
 		appStore.setAppsOrder(
 			[]
-				.concat(o(this.state.apps))
+				.concat(_ToArray(this.state.apps))
 				.sort(function (e, t) {
 					return e.renderProps.orderStyle.order - t.renderProps.orderStyle.order;
 				})
@@ -335,8 +337,8 @@ class _AppList extends ComponentBase {
 			case "ArrowUp":
 			case "ArrowDown":
 				if (!this.isAnimationEnd) return void e.preventDefault();
-				var o = n ? this.reorder.focus || this.state.focus : this.state.focus;
-				(i = n13.navGrid({ currentRowCol: o, dir: a, col: this.state.col, total: this.state.apps.length })), this.navItem(i);
+				var _ToArray = n ? this.reorder.focus || this.state.focus : this.state.focus;
+				(i = n13.navGrid({ currentRowCol: _ToArray, dir: a, col: this.state.col, total: this.state.apps.length })), this.navItem(i);
 				break;
 			case "Call":
 				launchStore.launch("manifestURL", "app://communications.gaiamobile.org/manifest.webapp");
@@ -399,13 +401,13 @@ class _AppList extends ComponentBase {
 		return e;
 	}
 	calcOrder(e) {
-		return 1e3 * (e + 1 + 0.5 * (arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 0));
+		return 1000 * (e + 1 + 0.5 * (arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 0));
 	}
 	render() {
 		var e = this,
 			t = "grid" === this.state.viewMode ? this.renderPagination() : null,
 			n = this.state.apps.map(function (e) {
-				return React.createElement(l, Object.assign({ key: e.manifestURL }, e));
+				return React.createElement(Create_tiles, Object.assign({ key: e.manifestURL }, e));
 			}),
 			i = ["appList", this.state.reorderMode ? "is-reordering" : ""].filter(Boolean).join(" ");
 		return React.createElement(
