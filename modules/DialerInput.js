@@ -86,7 +86,7 @@ class DialerInput extends ComponentBase {
 	}
 	onKeyDown(e) {
 		var t = this,
-			n = n110.translate(e.key);
+			n = dialer_translator.translate(e.key);
 		if (!this.longpressDeleteTimer && (!Service.query("Dialer.isCalling") || ("Call" === n && "Enter" === n)))
 			switch (n) {
 				case "1":
